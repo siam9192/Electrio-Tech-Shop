@@ -63,11 +63,11 @@ const FeaturedCategories = () => {
                 <div className=' lg:flex  items-center  lg:space-y-0 space-y-5 lg:px-0 px-2'>
                     <div className='lg:w-[40%] space-y-6'>
                        <div className=' space-y-3'> <h3 className=' text-color_secondary font-bold'>TOP CATEGORIES</h3>
-                        <h1 className=' text-5xl font-bold text-color_primary'>Featured Categories </h1></div>
+                        <h1 className=' lg:text-5xl text-3xl font-bold text-color_primary'>Featured Categories </h1></div>
                         <p>Electronics stores are renowned for being the first to showcase new gadgets and devices. </p>
                         <div className=' w-fit py-4 px-6 bg-color_secondary text-white flex items-center gap-2 hover:cursor-pointer text-xl rounded-md hover:bg-color_yellow hover:text-color_primary'><span>Explore Now</span> <span><HiArrowLongRight></HiArrowLongRight></span></div>
                     </div>
-                    <div className=' lg:w-[60%] grid md:lg:grid-cols-4 grid-cols-1  gap-5 lg:px-0  px-10'>
+                    <div className=' lg:w-[60%] grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-5 lg:px-0  px-10'>
                         {
                           categories.map((category,index)=>{
                             return <div className='category_card p-10 border rounded-lg hover:bg-color_secondary hover:cursor-pointer   flex justify-center flex-col gap-2 items-center transition-all  duration-200 ease-in-out '>

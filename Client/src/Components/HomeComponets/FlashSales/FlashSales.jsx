@@ -8,7 +8,7 @@ const FlashSales = () => {
         <div className=' py-10 lg:px-0 px-2'>
             <WidthContainer>
             <div className=' space-y-3'> <h3 className=' text-color_secondary font-bold'>TRENDING ITEMS</h3>
-                        <h1 className=' md:text-5xl text-4xl font-bold text-color_primary'>Today's Flash Sales </h1></div>
+                        <h1 className=' md:text-5xl text-3xl font-bold text-color_primary'>Today's Flash Sales </h1></div>
             <div className='pt-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
                 {
                     products.map((product,index)=>{

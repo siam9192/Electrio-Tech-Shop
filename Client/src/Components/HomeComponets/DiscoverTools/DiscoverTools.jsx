@@ -69,17 +69,18 @@ const DiscoverTools = () => {
                 </div>
             </WidthContainer>
         </div>
-        <div className=' bg-color_secondary py-10'>
+        <div className=' bg-color_secondary py-20'>
             <WidthContainer>
-                <div className=' grid grid-cols-4'>
+                <div className=' grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 lg:px-0 px-10'>
                     {
                         services.map((service,index)=>{
-                            return <div className=' flex gap-2' key={index}>
+                            return <div className={`flex gap-2 ${index !== services.length-1 ? 'border-r' : ''}`} key={index}>
                               <div className=' text-color_yellow text-4xl'>
                               {service.icon}
                               </div>
                                 <div className=' space-y-2'>
-                                    <h1 className=' text-3xl font-semibold text-white'>{service.name}</h1>
+                                    <h1 className=' text-3xl font-semibol font-medium text-white'>{service.name}</h1>
+                                    <h3 className=' font-semibol text-white'>{service.service}</h3>
                                 </div>
 
                             </div>

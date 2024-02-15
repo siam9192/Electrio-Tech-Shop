@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Marquee from 'react-fast-marquee';
 import WidthContainer from '../Reuse/WidthContainer/WidthContainer'
 import { Link } from 'react-router-dom';
@@ -14,8 +14,12 @@ import { RiWebcamLine } from "react-icons/ri";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi2";
+import ResponsiveNavbar from './ResponsiveNavbar';
+import SearchBar from '../SearchBar/SearchBar';
 const Navbar = () => {
-    const slidingText = ['Order online call us +378 029 819 ',"Free Shipping Free Return for above $50.00 ","Join our electio shop and enjoy -15% discount on all trending products",'Order online call us +378 029 819 ',"Free Shipping Free Return for above $50.00 ","Join our electio shop and enjoy -15% discount on all trending products"]
+  const [toggle,setToggle] = useState(false);
+  const [isSearch,setSearch] = useState(false)
+    const slidingText = ['Order online call us +378 029 819 ',"Free Shipping Free Return for above $50.00 ","Join our electio shop and enjoy -15% discount on all trending products",'Order online call us +378 029 819 ']
     const categories = [
       {
         category: "Cell Phone",
@@ -43,15 +47,22 @@ const Navbar = () => {
         icon: <IoGameControllerOutline></IoGameControllerOutline>
       }
     ]
-
+  
     const NavRoutes = [{display:'Home',path:'/'},{display:'Shop',path:'/shop'},{display:'Products',path:'/products'},{display:'Blog',path:'/blog'}]
+    const handleToggle = (value)=>{
+      setToggle(value)
+    }
+
+    const handleSearch = (value)=>{
+      setSearch(value)
+    }
     return (
         <div className='text-white'>
-            <div className='py-3 bg-color_secondary  text-[14px]'>
-                <Marquee speed={60}>
+            <div className='py-3 bg-color_secondary  text-[14px] '>
+                <Marquee speed={120} loop={0}>
                 <div className=' flex gap-5 items-center'>
                 {
-                    slidingText.map((item,index)=> <div className=' w-fit flex items-center gap-4'>
+                    slidingText.map((item,index)=> <div className=' w-fit flex items-center gap-4' key={index}>
                         <div className='w-2 h-2 rounded-full bg-[#fff] '></div>
                         <span>{item}</span>
                     </div>)
@@ -71,7 +82,9 @@ const Navbar = () => {
                     <img src="/images/logo.png" alt="" />
                 </div>
                 <div className=' flex items-center md:gap-8 gap-3 text-2xl text-black'>
+                    <div className=' hover:cursor-pointer' onClick={()=>setSearch(true)}>
                     <CiSearch></CiSearch>
+                    </div>
                     <LuUser></LuUser>
                     <div className=' relative'>
                     <AiOutlineHeart></AiOutlineHeart>
@@ -85,9 +98,9 @@ const Navbar = () => {
                                 </svg>
               <div className=' w-5 h-5 bg-color_yellow flex justify-center items-center absolute -top-3 -right-3 rounded-full text-[#22] text-[14px]'>0</div>
                     </div>
-                   <div className=' lg:hidden block  text-color_secondary text-3xl' >
+                   <button className=' lg:hidden block  text-color_secondary text-3xl' disabled={toggle} onClick={()=>handleToggle(true)} >
                     <HiOutlineMenuAlt3></HiOutlineMenuAlt3>
-                   </div>
+                   </button>
                 </div>
             </div>
         </WidthContainer>
@@ -117,8 +130,8 @@ const Navbar = () => {
         </div>
         </div>
 
-      
-        
+         <SearchBar isSearch={isSearch} setSearch={handleSearch}></SearchBar>
+        <ResponsiveNavbar toggle={toggle} setToggle= {handleToggle}></ResponsiveNavbar>
         </div>
     );
 }

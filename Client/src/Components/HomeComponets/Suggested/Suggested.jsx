@@ -9,7 +9,7 @@ const Suggested = () => {
         <div className='py-20 lg:px-0 px-2'>
             <WidthContainer>
                 <div className='grid lg:grid-cols-3 grid-cols-1 gap-5'>
-                <div className='suggest_banner p-5 w-full h-full bg-[url("https://electio.ecom.themepreview.xyz/home-two/wp-content/uploads/sites/5/2023/10/banner-8.jpg")] '>
+                <div className='suggest_banner p-5 w-full lg:h-full h-[500px] bg-[url("https://electio.ecom.themepreview.xyz/home-two/wp-content/uploads/sites/5/2023/10/banner-8.jpg")] '>
                    <div className=' space-y-4'>
                     <div className=' space-y-2'>
                         <h4 className=' text-color_yellow font-semibold text-center'>New Arrival</h4>
@@ -22,7 +22,7 @@ const Suggested = () => {
                    </div>
                 </div>
                 <div className='lg:px-5'>
-                    <h1 className=' text-5xl text-color_primary font-semibold'>Best Selling</h1>
+                    <h1 className=' md:text-5xl text-3xl text-color_primary font-semibold'>Best Selling</h1>
                     <div className='py-5 space-y-3'>
                         {
                           products.slice(0,3).map((product,index)=>{
@@ -32,7 +32,7 @@ const Suggested = () => {
                     </div>
                 </div>
                 <div className='lg:px-5'>
-                    <h1 className=' text-5xl text-color_primary font-semibold'>Recently Added</h1>
+                    <h1 className=' md:text-5xl text-3xl text-color_primary font-semibold'>Recently Added</h1>
                     <div className='py-5 space-y-3'>
                         {
                           products.slice(0,3).map((product,index)=>{

@@ -19,11 +19,11 @@ const EventCart = ({product}) => {
           <img src={product.images[0]} alt="" />
           </div>
           <div className=' w-[70%] space-y-1 relative'>
-            <h1 className=' text-xl'>{product.name.slice(0,60)}...</h1>
+            <h1 className=' lg:text-xl text-[18px]'>{product.name.length > 60 ? product.name.slice(0,60)+'...' :product.name }</h1>
             <Rating readonly initialRating={4.5} emptySymbol={<TiStarOutline></TiStarOutline>} fullSymbol={<TiStarFullOutline></TiStarFullOutline>}/>
             <h2><del className=' text-color_red_orange'>BDT {product.pricing.price}</del><span className=' text-color_primary font-semibold text-[18px]'>  BDT {product.pricing.discountPrice}</span></h2>
           </div>
-         <div className={`absolute right-0  bg-color_secondary transition-all ease-in-out duration-300 text-xl px-6 py-2 ${isHover ? 'bottom-0' : '-bottom-10'}`}>
+         <div className={`absolute right-0  bg-color_secondary transition-all ease-in-out duration-300 text-xl px-6 py-2  ${isHover ? 'bottom-0' : '-bottom-10'}`}>
             {cartIcon}
          </div>
         </div>
