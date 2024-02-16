@@ -8,7 +8,7 @@ import FilterBox from '../../Components/FilterBox/FilterBox';
     return (
         <div className=''>
            
-                <div className=' py-10  bg-gray-100'>
+                <div className=' md:py-10 py-5  bg-gray-100'>
                   <WidthContainer>
                   <h2 className=' text-xl text-black'>Home / Products</h2>
                   </WidthContainer>
@@ -19,7 +19,7 @@ import FilterBox from '../../Components/FilterBox/FilterBox';
                 <div className=' w-[30%] lg:block hidden '>
                     <FilterBox></FilterBox>
                 </div>
-                    <div className=' w-full '>
+                    <div className=' w-full lg:px-0 px-2'>
                      <ProductsBox products={products}></ProductsBox>
                     </div>
                 </div>

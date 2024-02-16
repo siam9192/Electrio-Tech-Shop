@@ -25,7 +25,7 @@ const ResponsiveNavbar = ({toggle,setToggle}) => {
                 </div>
            { 
             NavRoutes.map((route,index)=>{
-               return <Link className=' hover:text-color_secondary'>
+               return <Link to={route.path} className=' hover:text-color_secondary'>
                 {route.display}
                 </Link>
             })

@@ -3,8 +3,12 @@ import { HiViewGrid } from "react-icons/hi";
 import {FaListUl}  from 'react-icons/fa6';
 import GridCard from '../Reuse/Cards/GridCard.jsx'
 import ListCard from '../Reuse/Cards/ListCard.jsx';
+import { FaFilter } from "react-icons/fa";
+import FilterBox from '../FilterBox/FilterBox.jsx';
+import { RxCross1 } from 'react-icons/rx';
 const ProductsBox = ({products}) => {
     const [type,setType] = useState('grid');
+    const [isFilterBox,setFilterBox] = useState(false);
   
     const sorts = [{
         name:'Default sorting',
@@ -31,12 +35,16 @@ const ProductsBox = ({products}) => {
     setType(value);
     localStorage.setItem('card-type',value)
    }
+//   const handelFilterBox = (e)=>{
+//     if()
+//   }
 
     return (
         <div>
-            <div className=' md:flex justify-between items-center pb-5'>
-                   <h2 className=' text-text_color text-xl'>Showing all 7 results</h2>
-                   <div className=' flex items-center gap-2'>
+            <div>
+            <div className=' flex justify-between items-center pb-5'>
+                   <h2 className=' text-text_color md:text-xl'>Showing all 7 results</h2>
+                   <div className=' flex items-center gap-3'>
                     <div className=''> 
                         <select name="" id="" className=' py-2 px-4 border bg-white'>
                         {
@@ -53,6 +61,9 @@ const ProductsBox = ({products}) => {
                     </div>
                  
                     </div>
+                    <div className=' text-2xl lg:hidden text-color_secondary hover:cursor-pointer' onClick={()=>setFilterBox(true)}>
+                        <FaFilter></FaFilter>
+                    </div>
                    </div>
 
                    </div>
@@ -68,6 +79,15 @@ const ProductsBox = ({products}) => {
                     
                    }
                    </div>
+        </div>
+        <div className={`fixed bg-gray-800 bg-opacity-20 top-0 ${isFilterBox ? 'left-0' : '-left-[200%]'}  w-full h-full overflow-y-auto transition-all duration-300 ease-in-out z-40`}>
+            <div className=' w-[90%] bg-white p-5'>
+                <FilterBox></FilterBox>
+            </div>
+            <div className=' text-3xl  text-color_light_red absolute top-2 right-2 hover:cursor-pointer' onClick={()=>setFilterBox(false)}>
+                <RxCross1></RxCross1>
+            </div>
+        </div>
         </div>
     );
 }
