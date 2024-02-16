@@ -41,7 +41,7 @@ const Footer = () => {
                         </div>
 
                     </div>
-                    <div className='lg:col-span-2 flex lg:flex-row flex-col justify-between'>
+                    <div className='md:col-span-2 flex md:flex-row flex-col justify-between'>
                    {
                     sections.map((item,index)=>{
                         return <div className=' space-y-6' key={index}> 

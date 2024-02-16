@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import WidthContainer from '../../Components/Reuse/WidthContainer/WidthContainer';
-
-const Products = () => {
+import products from '../../Components/product'
+import ProductsBox from '../../Components/ProductsBox/ProductsBox';
+import FilterBox from '../../Components/FilterBox/FilterBox';
+ const Products = () => {
+  
     return (
         <div className=''>
            
@@ -12,16 +15,12 @@ const Products = () => {
 
                 </div>
             <WidthContainer>
-                <div className=' flex gap-5 py-10'>
-                    <div className=' w-[20%]'></div>
+                <div className=' flex gap-5 py-10 '>
+                <div className=' w-[30%] lg:block hidden '>
+                    <FilterBox></FilterBox>
+                </div>
                     <div className=' w-full '>
-                   <div className=' flex justify-between items-center pb-5'>
-                   <h2 className=' text-text_color text-xl'>Showing all 7 results</h2>
-                   <div className=' flex items-center gap-2'>
-                    
-                   </div>
-
-                   </div>
+                     <ProductsBox products={products}></ProductsBox>
                     </div>
                 </div>
             </WidthContainer>

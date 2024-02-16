@@ -16,6 +16,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi2";
 import ResponsiveNavbar from './ResponsiveNavbar';
 import SearchBar from '../SearchBar/SearchBar';
+
 const Navbar = () => {
   const [toggle,setToggle] = useState(false);
   const [isSearch,setSearch] = useState(false)
