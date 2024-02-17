@@ -6,15 +6,24 @@ import {getAuth} from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCVh2U56enmsXZTKsEFvae_Pm9neZ4WzKk",
-  authDomain: "ego-ecommerce.firebaseapp.com",
-  projectId: "ego-ecommerce",
-  storageBucket: "ego-ecommerce.appspot.com",
-  messagingSenderId: "298697245116",
-  appId: "1:298697245116:web:5469c1af06f0224da5ebb9"
+
+  apiKey: "AIzaSyDAJSTDuUYmvJsyYxzEQGrA8cKZWFD2yjU",
+
+  authDomain: "electio-a3623.firebaseapp.com",
+
+  projectId: "electio-a3623",
+
+  storageBucket: "electio-a3623.appspot.com",
+
+  messagingSenderId: "869041183426",
+
+  appId: "1:869041183426:web:067dacee6d6c0f895eb95b"
+
 };
 
+
 // Initialize Firebase
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app)
 

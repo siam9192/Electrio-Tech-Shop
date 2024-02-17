@@ -14,6 +14,8 @@ import { RiWebcamLine } from "react-icons/ri";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { HiOutlinePhone } from "react-icons/hi2";
+import { FaRegUser } from "react-icons/fa6";
+import { FiSearch } from "react-icons/fi";
 import ResponsiveNavbar from './ResponsiveNavbar';
 import SearchBar from '../SearchBar/SearchBar';
 import CartBar from '../Cartbar/Cartbar';
@@ -95,9 +97,12 @@ const Navbar = () => {
                 </div>
                 <div className=' flex items-center md:gap-8 gap-3 text-2xl text-black'>
                     <div className=' hover:cursor-pointer' onClick={()=>setSearch(true)}>
-                    <CiSearch></CiSearch>
+                    <FiSearch></FiSearch>
                     </div>
-                    <LuUser></LuUser>
+                   <Link to={'/sign-up'}>
+                   <div>
+                      <FaRegUser></FaRegUser>
+                    </div></Link>
                     <div className=' relative'>
                     <AiOutlineHeart></AiOutlineHeart>
                       <div className=' w-5 h-5 bg-color_yellow flex justify-center items-center absolute -top-3 -right-3 rounded-full text-[#22] text-[14px]'>0</div>
