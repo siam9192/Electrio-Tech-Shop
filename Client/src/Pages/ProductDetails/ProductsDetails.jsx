@@ -10,6 +10,7 @@ import { SiGooglemessages } from "react-icons/si";
 import { FaFacebook } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
+import FlashCard from '../../Components/Reuse/Cards/FlashCard';
 const ProductsDetails = () => {
     const [product,setProduct] = useState(products[7])
     const [activeImage,setActiveImage] = useState(0)
@@ -31,7 +32,7 @@ const ProductsDetails = () => {
     }
     return (
         <div>
-              <div className=' md:py-10 py-5  bg-gray-100'>
+              <div className=' md:py-10 py-5 llg:px-0 px-2  bg-gray-100'>
                   <WidthContainer>
                   <h2 className=' md:text-xl text-black'>Home / Products / Hello world</h2>
                   </WidthContainer>
@@ -139,6 +140,18 @@ const ProductsDetails = () => {
                             <p>{product.description}</p>
                         </div>
 
+                    </div>
+
+                    <div className=' py-10'>
+                    <div className=' space-y-3'> <h3 className=' text-color_secondary text-center font-bold'>RELATED</h3>
+                        <h1 className=' lg:text-4xl text-3xl text-center font-bold text-color_primary'>Related Products</h1></div>
+                        <div className=' py-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
+                            {
+                                products.slice(0,4).map((product,index)=>{
+                                    return <FlashCard product={product}></FlashCard>
+                                })
+                            }
+                        </div>
                     </div>
                 </WidthContainer>
             </div>
