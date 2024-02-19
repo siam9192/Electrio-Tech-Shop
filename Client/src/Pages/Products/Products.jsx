@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import WidthContainer from '../../Components/Reuse/WidthContainer/WidthContainer';
-import products from '../../Components/product'
+// import products from '../../Components/product'
 import ProductsBox from '../../Components/ProductsBox/ProductsBox';
 import FilterBox from '../../Components/FilterBox/FilterBox';
+import AxiosBase from '../../Axios/AxiosBase';
+import ProductsData from '../../TanstackQuery/ProductsData'
  const Products = () => {
-  
+ 
     return (
         <div className=''>
            
@@ -20,7 +22,7 @@ import FilterBox from '../../Components/FilterBox/FilterBox';
                     <FilterBox></FilterBox>
                 </div>
                     <div className=' w-full lg:px-0 px-2'>
-                     <ProductsBox products={products}></ProductsBox>
+                     <ProductsBox ></ProductsBox>
                     </div>
                 </div>
             </WidthContainer>

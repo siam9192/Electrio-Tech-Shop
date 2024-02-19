@@ -91,7 +91,7 @@ const SignUp = () => {
         }
         createUser(email,password)
         .then(res =>{
-            AxiosBase().post('/api/v1/user/add',user)
+            AxiosBase().post('/user/add',user)
             .then(res =>{
                 if(res.data.insertedId){
                     // alert('Success')

@@ -11,15 +11,24 @@ import { FaFacebook } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import FlashCard from '../../Components/Reuse/Cards/FlashCard';
+import { useQuery } from '@tanstack/react-query';
+import AxiosBase from '../../Axios/AxiosBase';
+import { useParams } from 'react-router-dom';
 const ProductsDetails = () => {
-    const [product,setProduct] = useState(products[7])
     const [activeImage,setActiveImage] = useState(0)
     const [quantity,setQuantity] = useState(1);
     const quantityRef = useRef();
-
+    const {id} = useParams();
+    const {data:product=null} = useQuery({
+        queryKey:['product'],
+        queryFn:async()=>{
+            const   res = await AxiosBase().get(`/get/product/${id}`)
+            return  res.data;
+        }
+    })
     const inc = ()=>{
      const plus = quantity + 1;
-     console.log(quantity)
+    
         setQuantity(plus)
      
      
@@ -34,7 +43,7 @@ const ProductsDetails = () => {
         <div>
               <div className=' md:py-10 py-5 llg:px-0 px-2  bg-gray-100'>
                   <WidthContainer>
-                  <h2 className=' md:text-xl text-black'>Home / Products / Hello world</h2>
+                  <h2 className=' md:text-xl text-black'>Home / Products / {product?.model}</h2>
                   </WidthContainer>
              
                 </div>
@@ -42,23 +51,23 @@ const ProductsDetails = () => {
             <WidthContainer>
                     <div className=' grid lg:grid-cols-2 gap-5'>
                         <div className=' flex md:flex-row flex-col gap-5'>
-                         <img src={product.images[activeImage]} alt="" className=' max-h-[500px]' />
+                         <img src={product?.images[activeImage]} alt="" className=' max-h-[500px]' />
                          <div className=' md:flex flex-col    grid  grid-cols-4  gap-3'>
                             {
-                                product.images.map((image,index)=> <img src={image} className={`max-h-32 p-5 border ${activeImage === index ? ' border-color_light_red border-2' : ''} hover:cursor-pointer`} onClick={()=>setActiveImage(index)}></img>)
+                                product?.images.map((image,index)=> <img src={image} className={`max-h-32 p-5 border ${activeImage === index ? ' border-color_light_red border-2' : ''} hover:cursor-pointer`} onClick={()=>setActiveImage(index)}></img>)
                             }
                          </div>
 
                         </div>
                         <div className=' space-y-5'>
                         <div className=' space-y-1'>
-                        <h1 className=' md:text-3xl text-2xl text-color_primary font-medium'>{product.name}</h1>
-                        <h1 className=' md:text-2xl text-xl text-color_secondary font-semibold'><span  className=' line-through fle items-center gap-1'>BDT.{product.pricing.discountPrice}</span> <span>BDT.{product.pricing.discountPrice}</span></h1>
+                        <h1 className=' md:text-3xl text-2xl text-color_primary font-medium'>{product?.model}</h1>
+                        <h1 className=' md:text-2xl text-xl text-color_secondary font-semibold'><span  className=' line-through fle items-center gap-1'>BDT.{product?.pricing.discountPrice}</span> <span>BDT.{product?.pricing.discountPrice}</span></h1>
                         </div>
                        
                         <div className='  space-y-1'>
                             {
-                                product.details.spec.split('\n').map((spec,index)=>{
+                                product?.details.spec.split('\n').map((spec,index)=>{
                                   return  <p className=' flex items-center gap-2' key={
                                          index
                                     }> <span className=' text-color_secondary'><GiCheckMark></GiCheckMark></span> <span>{spec}</span></p>
@@ -69,7 +78,7 @@ const ProductsDetails = () => {
                             <h2 className=' text-xl text-color_primary font-medium'>Colors :</h2>
                             <div className=' flex items-center gap-2 flex-wrap'>
                                 {
-                                    product.details.colors.map((color,index)=> <div className=' w-5 h-5 rounded-full' style={{backgroundColor:color}}></div>)
+                                    product?.details.colors.map((color,index)=> <div className=' w-5 h-5 rounded-full' style={{backgroundColor:color}}></div>)
                                 }
                             </div>
                         </div>
@@ -95,17 +104,19 @@ const ProductsDetails = () => {
                         </div>
                         </div>
                         <div className=' space-y-4 py-10'>
-                            <h1> <span className=' font-semibold text-color_primary'>Model : </span>
+                            {/* <h1> <span className=' font-semibold text-color_primary'>Model : </span>
                              {'Smart Phone'}
-                            </h1>
+                            </h1> */}
                             <h1> <span className=' font-semibold text-color_primary'>Product : </span>
-                             {'Smart Phone'}
+                             {product?.details.name}
                             </h1>
                             <h1> <span className=' font-semibold text-color_primary'>Category : </span>
-                             {product.details.category}
+                             {product?.details.category}
                             </h1>
                             <h1> <span className=' font-semibold text-color_primary'>Search Tags : </span>
-                             {'Smart Phone, Realme,Samsung,Mobile'}
+                             {
+                             product?.searchKeywords.join(',')
+                             }
                             </h1>
                         </div>
 
@@ -137,7 +148,7 @@ const ProductsDetails = () => {
                         </div>
 
                         <div className=' mt-10'>
-                            <p>{product.description}</p>
+                            <p>{product?.description}</p>
                         </div>
 
                     </div>

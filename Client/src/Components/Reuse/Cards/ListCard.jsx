@@ -10,7 +10,7 @@ const ListCard = ({product}) => {
             </div>
             <div className=' w-full space-y-4'>
                 <p className=' text-color_secondary font-semibold'>{product.details.category}</p>
-                <h1 className=' text-xl text-color_primary'>{product.name.length > 30 ? product.name.slice(0,30) + '...' : product.name}</h1>
+                <h1 className=' text-xl text-color_primary'>{product.model.length > 30 ? product.model.slice(0,30) + '...' : product.model}</h1>
                 <Rating readonly initialRating={4.5} emptySymbol={<TiStarOutline></TiStarOutline>} fullSymbol={<TiStarFullOutline></TiStarFullOutline>}/>
                 <p>{product.description.length > 320 ? product.description.slice(0,320)+'...' : product.description}</p>
                 <div>

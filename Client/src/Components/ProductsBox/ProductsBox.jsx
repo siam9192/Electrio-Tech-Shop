@@ -6,10 +6,14 @@ import ListCard from '../Reuse/Cards/ListCard.jsx';
 import { FaFilter } from "react-icons/fa";
 import FilterBox from '../FilterBox/FilterBox.jsx';
 import { RxCross1 } from 'react-icons/rx';
-const ProductsBox = ({products}) => {
+import ShortDetails from '../Reuse/ShortDetails/ShortDetails.jsx';
+import ProductsData from '../../TanstackQuery/ProductsData.js';
+const ProductsBox = () => {
     const [type,setType] = useState('grid');
     const [isFilterBox,setFilterBox] = useState(false);
-  
+    const [isShortDetails,setSortDetails] = useState(null)
+    const [currentPage,setCurrentPage] = useState(1);
+    const {products,pages,refetch} = ProductsData(currentPage)
     const sorts = [{
         name:'Default sorting',
         value:''
@@ -35,9 +39,6 @@ const ProductsBox = ({products}) => {
     setType(value);
     localStorage.setItem('card-type',value)
    }
-//   const handelFilterBox = (e)=>{
-//     if()
-//   }
 
     return (
         <div>
@@ -79,6 +80,9 @@ const ProductsBox = ({products}) => {
                     
                    }
                    </div>
+                   <div className=' flex justify-center items-center gap-2'>
+
+                   </div>
         </div>
         <div className={`fixed bg-gray-800 bg-opacity-20 top-0 ${isFilterBox ? 'left-0' : '-left-[200%]'}  w-full h-full overflow-y-auto transition-all duration-300 ease-in-out z-40`}>
             <div className=' w-[90%] bg-white p-5'>
@@ -88,6 +92,7 @@ const ProductsBox = ({products}) => {
                 <RxCross1></RxCross1>
             </div>
         </div>
+       
         </div>
     );
 }
