@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import WidthContainer from '../../Components/Reuse/WidthContainer/WidthContainer';
 import products from '../../Components/product';
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
@@ -13,12 +13,25 @@ import { FaInstagram } from "react-icons/fa";
 import FlashCard from '../../Components/Reuse/Cards/FlashCard';
 import { useQuery } from '@tanstack/react-query';
 import AxiosBase from '../../Axios/AxiosBase';
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { handleAlert } from '../../Redux/Reducer/AlertSlice';
+import UserAuth from '../../Authentication/UserAuth/UserAuth'
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 const ProductsDetails = () => {
     const [activeImage,setActiveImage] = useState(0)
     const [quantity,setQuantity] = useState(1);
+    const [selectedColor,setSelectedColor] = useState(0)
     const quantityRef = useRef();
+    const {pathname} = useLocation()
+    const navigate = useNavigate();
     const {id} = useParams();
+    const dispatch = useDispatch ();
+    const [relatedProducts,setRelatedProducts] = useState([]);
+    const {user} = UserAuth()
     const {data:product=null} = useQuery({
         queryKey:['product'],
         queryFn:async()=>{
@@ -26,6 +39,15 @@ const ProductsDetails = () => {
             return  res.data;
         }
     })
+
+    useEffect(()=>{
+        if(product){
+            AxiosBase().get(`/related/products?category=${product.details.category}&id=${id}`)
+            .then(res =>{
+                setRelatedProducts(res.data)
+            })
+        }
+    },[product])
     const inc = ()=>{
      const plus = quantity + 1;
     
@@ -39,6 +61,58 @@ const ProductsDetails = () => {
             setQuantity(dec)
          }
     }
+
+    const handleDispatch = ()=>{
+        dispatch(handleAlert({status:true,text:null}))
+        setTimeout(()=>{
+           dispatch(handleAlert({status:false,text:null}))
+        },2000)
+    }
+
+    const addCart = ()=>{
+
+        if(!user){
+        navigate('/login',{state:pathname})
+        return;
+            
+        }
+        const cart = {
+            product_id: id,
+            quantity,
+            color: product.details.colors[selectedColor],
+            customer:user.email,
+            added: {
+                date:{
+                 day: new Date().getDay(),
+                 month: new Date().getMonth()+1,
+                 year: new Date().getFullYear()
+                },
+                time:{
+                 hours: new Date().getHours(),
+                 minute: new Date().getMinutes(),
+                 seconds: new Date().getSeconds()
+                }
+             }
+
+        }
+
+        AxiosBase().post('/add/product/cart',cart)
+        toast('Successfully added!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+       
+
+       
+    }
+   
     return (
         <div>
               <div className=' md:py-10 py-5 llg:px-0 px-2  bg-gray-100'>
@@ -84,6 +158,17 @@ const ProductsDetails = () => {
                         </div>
 
                         <div className=' p-5 border space-y-4'>
+                        <div className=' space-y- flex items-center gap-3'>
+                            <h2 className=' text-xl text-color_primary font-medium'>Select Colors :</h2>
+                            <div className=' flex items-center gap-2 flex-wrap'>
+                                {
+                                    product?.details.colors.map((color,index)=> <div className={`${selectedColor === index ? 'border-2 border-color_secondary' : ''} rounded-full p-1 hover:cursor-pointer`} key={index} onClick={()=>setSelectedColor(index)}>
+                                        <div className={`w-5 h-5 rounded-full `} style={{backgroundColor:color}}></div>
+                                    </div>)
+                                }
+                            </div>
+                        </div>
+
                         <div className=' flex md:flex-row flex-col md:items-center  gap-3'>
                             <div className=' flex items-center gap-1 bg-gray-200 px-2'>
                                 <div className=' text-xl text-black hover:cursor-pointer' onClick={dec}> <FaMinus></FaMinus>  </div>
@@ -91,7 +176,7 @@ const ProductsDetails = () => {
 
                                 <div className=' text-xl text-black hover:cursor-pointer' onClick={inc}><LuPlus></LuPlus></div>
                             </div>
-                            <button className=' py-3 px-10 bg-color_secondary text-white'>Add To Cart</button>
+                            <button className=' py-3 px-10 bg-color_secondary text-white' onClick={addCart}>Add To Cart</button>
                         </div>
 
                         <div className=' flex gap-3 items-center'>
@@ -115,7 +200,7 @@ const ProductsDetails = () => {
                             </h1>
                             <h1> <span className=' font-semibold text-color_primary'>Search Tags : </span>
                              {
-                             product?.searchKeywords.join(',')
+                             product?.searchKeywords?.join(',')
                              }
                             </h1>
                         </div>
@@ -158,7 +243,7 @@ const ProductsDetails = () => {
                         <h1 className=' lg:text-4xl text-3xl text-center font-bold text-color_primary'>Related Products</h1></div>
                         <div className=' py-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
                             {
-                                products.slice(0,4).map((product,index)=>{
+                            relatedProducts.map((product,index)=>{
                                     return <FlashCard product={product}></FlashCard>
                                 })
                             }
@@ -166,6 +251,7 @@ const ProductsDetails = () => {
                     </div>
                 </WidthContainer>
             </div>
+         <ToastContainer></ToastContainer>
         </div>
     );
 }

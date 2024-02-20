@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import WidthContainer from '../../Reuse/WidthContainer/WidthContainer';
-import products from '../../product';
+// import products from '../../product';
 import EventCart from '../../Reuse/Cards/EventCart';
+import AxiosBase from '../../../Axios/AxiosBase';
 
 const Suggested = () => {
-    
+    const [products,setProducts] = useState({})
+    useEffect(()=>{
+        AxiosBase().get('/get/suggested/products')
+        .then(res =>{
+            setProducts(res.data)
+        })
+    },[])
     return (
         <div className='py-20 lg:px-0 px-2'>
             <WidthContainer>
@@ -25,7 +32,7 @@ const Suggested = () => {
                     <h1 className=' md:text-5xl text-3xl text-color_primary font-semibold'>Best Selling</h1>
                     <div className='py-5 space-y-3'>
                         {
-                          products.slice(0,3).map((product,index)=>{
+                          products?.bestSelling?.map((product,index)=>{
                             return <EventCart product={product} key={index}></EventCart>
                           })  
                         }
@@ -35,7 +42,7 @@ const Suggested = () => {
                     <h1 className=' md:text-5xl text-3xl text-color_primary font-semibold'>Recently Added</h1>
                     <div className='py-5 space-y-3'>
                         {
-                          products.slice(0,3).map((product,index)=>{
+                          products?.recentAdded?.map((product,index)=>{
                             return <EventCart product={product} key={index}></EventCart>
                           })  
                         }

@@ -8,12 +8,12 @@ import FilterBox from '../FilterBox/FilterBox.jsx';
 import { RxCross1 } from 'react-icons/rx';
 import ShortDetails from '../Reuse/ShortDetails/ShortDetails.jsx';
 import ProductsData from '../../TanstackQuery/ProductsData.js';
-const ProductsBox = () => {
+const ProductsBox = ({currentPage,setCurrentPage}) => {
     const [type,setType] = useState('grid');
     const [isFilterBox,setFilterBox] = useState(false);
     const [isShortDetails,setSortDetails] = useState(null)
-    const [currentPage,setCurrentPage] = useState(1);
-    const {products,pages,refetch} = ProductsData(currentPage)
+    const [sort,setSort] = useState(null)
+    const {products,pages,refetch,isLoading} = ProductsData(currentPage)
     const sorts = [{
         name:'Default sorting',
         value:''
@@ -80,9 +80,28 @@ const ProductsBox = () => {
                     
                    }
                    </div>
+                   {
+                    isLoading ? <div className=' text-center py-20'>
+                        <span className="loading loading-ring w-32 text-color_secondary"></span>
+                    </div>
+                    :
+                   
                    <div className=' flex justify-center items-center gap-2'>
-
+                      <div className=' flex items-center gap-2'>
+                     
+                        {
+                            pages.map((page,index)=>{
+                                return <div className={`px-3 py-2 border hover:cursor-pointer ${currentPage === page ? ' bg-color_secondary text-white' : 'border-color_primary text-color_primary '}`} key={index} onClick={()=>{
+                                    setCurrentPage(page)
+                                    refetch()
+                                }}>
+                                    {page}
+                                </div>
+                            })
+                        }
+                      </div>
                    </div>
+}
         </div>
         <div className={`fixed bg-gray-800 bg-opacity-20 top-0 ${isFilterBox ? 'left-0' : '-left-[200%]'}  w-full h-full overflow-y-auto transition-all duration-300 ease-in-out z-40`}>
             <div className=' w-[90%] bg-white p-5'>

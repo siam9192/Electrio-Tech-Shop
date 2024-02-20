@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import WidthContainer from '../../Reuse/WidthContainer/WidthContainer';
-import products from '../../product';
+// import products from '../../product';
 import FlashCard from '../../Reuse/Cards/FlashCard';
 import { HiArrowLongRight } from "react-icons/hi2";
+import AxiosBase from '../../../Axios/AxiosBase';
 const FlashSales = () => {
+    const [products,setProducts] = useState([]);
+    
+
+    useEffect(()=>{
+        AxiosBase().get('/get/flash-sales/products')
+        .then(res=>{
+            setProducts(res.data)
+        })
+    },[])
     return (
         <div className=' py-10 lg:px-0 px-2'>
             <WidthContainer>
@@ -12,7 +22,7 @@ const FlashSales = () => {
             <div className='pt-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
                 {
                     products.map((product,index)=>{
-                        return <FlashCard product={product} key={index}></FlashCard>
+                        return <FlashCard product={product} index={index} key={index}></FlashCard>
                     })
                 }
             </div>

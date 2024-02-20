@@ -6,7 +6,11 @@ import FilterBox from '../../Components/FilterBox/FilterBox';
 import AxiosBase from '../../Axios/AxiosBase';
 import ProductsData from '../../TanstackQuery/ProductsData'
  const Products = () => {
- 
+    const [currentPage,setCurrentPage] = useState(1);
+    const handleCurrentPage = (page)=>{
+        setCurrentPage(page);
+
+    }
     return (
         <div className=''>
            
@@ -19,10 +23,10 @@ import ProductsData from '../../TanstackQuery/ProductsData'
             <WidthContainer>
                 <div className=' flex gap-5 py-10 '>
                 <div className=' w-[30%] lg:block hidden '>
-                    <FilterBox></FilterBox>
+                    <FilterBox currentPage={currentPage}></FilterBox>
                 </div>
                     <div className=' w-full lg:px-0 px-2'>
-                     <ProductsBox ></ProductsBox>
+                     <ProductsBox currentPage={currentPage} setCurrentPage={handleCurrentPage}></ProductsBox>
                     </div>
                 </div>
             </WidthContainer>

@@ -4,10 +4,13 @@ import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import { useSelector } from 'react-redux';
 import ShortDetails from '../Components/Reuse/ShortDetails/ShortDetails';
+import SuccessAlert from '../Components/Aleart/SuccessAlert';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Routes = () => {
     const shortProduct = useSelector((state)=>state.shortDetails.product);
-
+    const alertStatus = useSelector(state => state.alert);
     useEffect(()=>{
         const scrollFunction = ()=>{
             if(shortProduct){
@@ -29,6 +32,9 @@ const Routes = () => {
            {
             shortProduct &&  <ShortDetails></ShortDetails>
            }
+     
+<ToastContainer></ToastContainer>
+  
         </div>
 
     );

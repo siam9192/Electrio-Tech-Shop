@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ProductsData from '../../TanstackQuery/ProductsData';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
-const FilterBox = () => {
-    const {refetch,params,removeEmptyParams} = ProductsData();
+const FilterBox = ({currentPage}) => {
+    const {refetch,params,removeEmptyParams} = ProductsData(currentPage);
     const [minPrice,setMinPrice] = useState(null);
     const [maxPrice,setMaxPrice] = useState(null) 
     const navigate = useNavigate();

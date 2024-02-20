@@ -6,7 +6,7 @@ const ProductsData = (currentPage) => {
     // console.log(currentPage)
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    const perPage = 10;
+    const perPage = 12;
     const [params,setParams] = useState([
         ['key',searchParams.get('key')?.split(',').filter(val=> val !== '')||[]],
         ['categories', searchParams.get('categories')?.split(',').filter(val=> val !== '')||[]],
@@ -15,7 +15,7 @@ const ProductsData = (currentPage) => {
         ['maxPrice',searchParams.get('maxPrice')?.split(',').filter(val=> val !== '')||[]]
       ]
     )
-    // key=${params[0][1].join(',')}&locations=${params[1][1].join(',')}&types=${params[2][1].join(',')}&status=${params[3][1].join(',')}&features=${params[4][1].join(',')}&sort=${sortBy}
+    
     const {data={},isLoading,refetch} = useQuery({
         queryKey:['products'],
         queryFn:async()=>{
@@ -38,7 +38,7 @@ const ProductsData = (currentPage) => {
 
      const products = data.products||[];
      const totalProducts = data.totalProducts;
-     const totalPages = totalProducts/perPage;
+     const totalPages = Math.ceil(totalProducts/perPage);
      const pages = [
 
      ]
@@ -46,8 +46,8 @@ const ProductsData = (currentPage) => {
      for(let i = 1; i < totalPages; i++){
         pages.push(i)
      }
-     
     
+  
       return {products,pages,isLoading,refetch,params,removeEmptyParams}
 }
 
