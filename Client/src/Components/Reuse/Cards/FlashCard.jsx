@@ -7,11 +7,18 @@ import { CiSearch } from "react-icons/ci";
 import { LuUser } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { AiOutlineHeart } from "react-icons/ai";
+import { useDispatch } from 'react-redux';
+import { insert } from '../../../Redux/Reducer/ShortDetails';
+import AxiosBase from '../../../Axios/AxiosBase';
+import UserAuth from '../../../Authentication/UserAuth/UserAuth';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 const FlashCard = ({product,index}) => {
     const [isHover,setHover] = useState(false);
+    const dispatch = useDispatch();
     const buttonRef = useRef(null);
     const shortCartRef = useRef(null);
     const cardRef = useRef(null)
+    const {user} = UserAuth();
     const handleHover = (value)=>{
         setHover(value)
     }
@@ -22,38 +29,102 @@ const FlashCard = ({product,index}) => {
     <path d="M15.4998 9.75024C15.3008 9.75024 15.1101 9.67123 14.9694 9.53057C14.8288 9.38992 14.7498 9.19916 14.7498 9.00024V5.50024C14.7498 4.7709 14.46 4.07143 13.9443 3.5557C13.4286 3.03998 12.7291 2.75024 11.9998 2.75024C11.2704 2.75024 10.5709 3.03998 10.0552 3.5557C9.53949 4.07143 9.24976 4.7709 9.24976 5.50024V9.00024C9.24976 9.19916 9.17074 9.38992 9.03009 9.53057C8.88943 9.67123 8.69867 9.75024 8.49976 9.75024C8.30084 9.75024 8.11008 9.67123 7.96943 9.53057C7.82877 9.38992 7.74976 9.19916 7.74976 9.00024V5.50024C7.74976 4.37307 8.19752 3.29207 8.99455 2.49504C9.79158 1.69801 10.8726 1.25024 11.9998 1.25024C13.1269 1.25024 14.2079 1.69801 15.005 2.49504C15.802 3.29207 16.2498 4.37307 16.2498 5.50024V9.00024C16.2498 9.19916 16.1707 9.38992 16.0301 9.53057C15.8894 9.67123 15.6987 9.75024 15.4998 9.75024V9.75024Z" fill="#000E3C"></path>
     <path d="M13.9998 18.75H9.99976C9.80084 18.75 9.61008 18.671 9.46943 18.5303C9.32877 18.3897 9.24976 18.1989 9.24976 18C9.24976 17.8011 9.32877 17.6103 9.46943 17.4697C9.61008 17.329 9.80084 17.25 9.99976 17.25H13.9998C14.1987 17.25 14.3894 17.329 14.5301 17.4697C14.6707 17.6103 14.7498 17.8011 14.7498 18C14.7498 18.1989 14.6707 18.3897 14.5301 18.5303C14.3894 18.671 14.1987 18.75 13.9998 18.75V18.75Z" fill="#000E3C"></path>
 </svg>
+   const handleDispatch = ()=>{
+    dispatch(insert(product))
+     }
+
+     const addCart = ()=>{
+
+        if(!user){
+        navigate('/login',{state:pathname})
+        return;
+            
+        }
+        const cart = {
+            product_id: product._id,
+            quantity:1,
+            color: product.details.colors[0],
+            customer:user.email,
+            added: {
+                date:{
+                 day: new Date().getDay(),
+                 month: new Date().getMonth()+1,
+                 year: new Date().getFullYear()
+                },
+                time:{
+                 hours: new Date().getHours(),
+                 minute: new Date().getMinutes(),
+                 seconds: new Date().getSeconds()
+                }
+             }
+
+        }
+
+        AxiosBase().post('/add/product/cart',cart)
+        toast('Successfully added!', {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+            transition: Bounce,
+            });
+       
+
+       
+    }
+
 
 useEffect(() => {
-const handler = (e)=>
-{
+ 
     const button = document.getElementById(`flashcardButton${index}`);
-const shortMenu = shortCartRef.current;
-const card = cardRef.current;
-console.log(button == e.target)
-if(button == e.target){
-    console.log('dddd')
-    alert(46747)
-}
-}
+    const searchButton = document.getElementById(`searchButton${index}`)
+    const addFavButton = document.getElementById(`addFavButton${index}`)
+    console.log(button,searchButton,addFavButton)
+    const handler = (e)=>
+    {
+        const button = document.getElementById(`flashcardButton${index}`);
+        const searchButton = document.getElementById(`searchButton${index}`)
+        const addFavButton = document.getElementById(`addFavButton${index}`)
+    const shortMenu = shortCartRef.current;
+    const card = cardRef.current;
+    
+    // console.log(button == e.target || )
+    if(button == e.target || button.contains(e.target)){
+      addCart()
+    }
+    else if(searchButton == e.target || searchButton.contains(e.target)){
+    handleDispatch()
+    }
+    else if(addFavButton == e.target || addFavButton.contains(e.target)){
+    
+    }
+    }
+    
+    if(button && searchButton && addFavButton){
+        document.getElementById(`flashcard${index}`).addEventListener('click',handler)
+        return ()=>{
+            document.getElementById(`flashcard${index}`).removeEventListener('click',handler)
+        }
+    }
 
-
-document.getElementById(`flashcard${index}`).addEventListener('click',handler)
-return ()=>{
-    document.getElementById(`flashcard${index}`).removeEventListener('click',handler)
-}
-
-}, [isHover]);
+  
+}, []);
 
     return (
-        <div className='border rounded-lg flex flex-col ' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`}>
+     <div>
+         <div className='border rounded-lg flex flex-col ' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`}>
             <div className=' flex-grow flex justify-center overflow-hidden relative'>
             <img src={product.images[0]} alt="" className={`w-10/12 transition-all duration-500 ease-out ${isHover ? ' scae-110' : 'scale-100'}`}/>
 
             <div className={` space-y-3 absolute top-2 transition-all duration-200 ${isHover ? 'right-2' : '-right-[200%]'}`} ref={shortCartRef}>
-                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl'>
+                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl hover:cursor-pointer' id={`searchButton${index}`}>
                   <IoSearch></IoSearch>
                 </div>
-                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl'>
+                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl hover:cursor-pointer' id={`addFavButton${index}`}>
                    <AiOutlineHeart></AiOutlineHeart>
                 </div>
             </div>
@@ -81,6 +152,8 @@ return ()=>{
                </div>
             </div>
         </div>
+        <ToastContainer></ToastContainer>
+     </div>
     );
 }
 

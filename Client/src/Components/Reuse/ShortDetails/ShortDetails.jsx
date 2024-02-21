@@ -10,10 +10,15 @@ import { FaInstagram } from "react-icons/fa";
 import { FaWindowClose } from "react-icons/fa";
 import { useDispatch, useSelector } from 'react-redux';
 import { insert } from '../../../Redux/Reducer/ShortDetails';
+import AxiosBase from '../../../Axios/AxiosBase';
+import UserAuth from '../../../Authentication/UserAuth/UserAuth';
+import { Bounce, ToastContainer, toast } from 'react-toastify';
 const ShortDetails = () => {
     const [activeImage,setActiveImage] = useState(0)
     const [quantity,setQuantity] = useState(1)
+    const [selectedColor,setSelectedColor] = useState(0);
     const dispatch = useDispatch();
+    const {user} = UserAuth();
     const product = useSelector((state)=>state.shortDetails.product);
        const inc = ()=>{
         const plus = quantity + 1;
@@ -28,7 +33,58 @@ const ShortDetails = () => {
                setQuantity(dec)
             }
        }
+       const addCart = ()=>{
 
+        if(!user){
+        navigate('/login',{state:pathname})
+        return;
+            
+        }
+        const cart = {
+            product_id: product._id,
+            quantity,
+            color: product.details.colors[selectedColor],
+            customer:user.email,
+            added: {
+                date:{
+                 day: new Date().getDay(),
+                 month: new Date().getMonth()+1,
+                 year: new Date().getFullYear()
+                },
+                time:{
+                 hours: new Date().getHours(),
+                 minute: new Date().getMinutes(),
+                 seconds: new Date().getSeconds()
+                }
+             }
+
+        }
+
+        AxiosBase().post('/add/product/cart',cart)
+        .then(res=>{
+           
+            if(res.data.insertedId){
+                toast('Successfully added!', {
+                    position: "bottom-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                    });
+               
+            }
+        })
+     
+       
+      
+
+       
+    }
+   
     
     return (
         <div className=' fixed top-0 left-0 w-full h-full bg-black bg-opacity-20 flex justify-center  py-10 z-40 overflow-y-auto scale-100  duration-500 ease-in transition-transform'>
@@ -70,6 +126,16 @@ const ShortDetails = () => {
                         </div>
 
                         <div className=' p-5 border space-y-4'>
+                        <div className=' space-y- flex items-center gap-3'>
+                            <h2 className='  text-color_primary font-medium'>Select Colors :</h2>
+                            <div className=' flex items-center gap-2 flex-wrap '>
+                                {
+                                    product?.details.colors.map((color,index)=> <div className={`${selectedColor === index ? 'border-2 border-color_secondary' : ''} rounded-full p-1 hover:cursor-pointer`} key={index} onClick={()=>setSelectedColor(index)}>
+                                        <div className={`w-5 h-5 rounded-full `} style={{backgroundColor:color}}></div>
+                                    </div>)
+                                }
+                            </div>
+                        </div>
                         <div className=' flex md:flex-row flex-col md:items-center  gap-3'>
                             <div className=' flex items-center gap-1 bg-gray-200 px-2'>
                                 <div className=' text-xl text-black hover:cursor-pointer' onClick={dec}> <FaMinus></FaMinus>  </div>
@@ -77,7 +143,7 @@ const ShortDetails = () => {
 
                                 <div className=' text-xl text-black hover:cursor-pointer' onClick={inc}><LuPlus></LuPlus></div>
                             </div>
-                            <button className=' py-3 px-10 bg-color_secondary text-white'>Add To Cart</button>
+                            <button className=' py-3 px-10 bg-color_secondary text-white' onClick={addCart}>Add To Cart</button>
                         </div>
 
                         <div className=' flex gap-3 items-center'>
@@ -104,6 +170,7 @@ const ShortDetails = () => {
             </div>
         
             </div>
+            <ToastContainer></ToastContainer>
             
         </div>
     );
