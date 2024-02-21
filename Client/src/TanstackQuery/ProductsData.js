@@ -16,9 +16,10 @@ const ProductsData = (currentPage) => {
       ]
     )
     
-    const {data={},isLoading,refetch} = useQuery({
+    const {data={},isLoading,isFetching,refetch} = useQuery({
         queryKey:['products'],
         queryFn:async()=>{
+            console.log('refetch request')
             const res = await AxiosBase().get(`/get/products?${createSearchParams(params)}&perPage=${perPage}&currentPage=${currentPage}`)
             return res.data
         }
@@ -48,7 +49,7 @@ const ProductsData = (currentPage) => {
      }
     
   
-      return {products,pages,isLoading,refetch,params,removeEmptyParams}
+      return {products,pages,isLoading,isFetching,refetch,params,removeEmptyParams}
 }
 
 export default ProductsData;

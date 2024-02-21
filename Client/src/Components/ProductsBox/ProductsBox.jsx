@@ -12,8 +12,8 @@ const ProductsBox = ({currentPage,setCurrentPage}) => {
     const [type,setType] = useState('grid');
     const [isFilterBox,setFilterBox] = useState(false);
     const [isShortDetails,setSortDetails] = useState(null)
-    const [sort,setSort] = useState(null)
-    const {products,pages,refetch,isLoading} = ProductsData(currentPage)
+    
+    const {products,pages,refetch,isLoading,isFetching} = ProductsData(currentPage)
     const sorts = [{
         name:'Default sorting',
         value:''
@@ -39,6 +39,7 @@ const ProductsBox = ({currentPage,setCurrentPage}) => {
     setType(value);
     localStorage.setItem('card-type',value)
    }
+  
 
     return (
         <div>
@@ -81,7 +82,7 @@ const ProductsBox = ({currentPage,setCurrentPage}) => {
                    }
                    </div>
                    {
-                    isLoading ? <div className=' text-center py-20'>
+                    isLoading || isFetching ? <div className=' text-center py-20'>
                         <span className="loading loading-ring w-32 text-color_secondary"></span>
                     </div>
                     :
@@ -93,6 +94,7 @@ const ProductsBox = ({currentPage,setCurrentPage}) => {
                             pages.map((page,index)=>{
                                 return <div className={`px-3 py-2 border hover:cursor-pointer ${currentPage === page ? ' bg-color_secondary text-white' : 'border-color_primary text-color_primary '}`} key={index} onClick={()=>{
                                     setCurrentPage(page)
+                                    console.log(page)
                                     refetch()
                                 }}>
                                     {page}

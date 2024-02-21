@@ -17,7 +17,7 @@ const FlashCard = ({product,index}) => {
     const dispatch = useDispatch();
     const buttonRef = useRef(null);
     const shortCartRef = useRef(null);
-    const cardRef = useRef(null)
+    const cardRef = useRef({})
     const {user} = UserAuth();
     const handleHover = (value)=>{
         setHover(value)
@@ -83,7 +83,8 @@ useEffect(() => {
     const button = document.getElementById(`flashcardButton${index}`);
     const searchButton = document.getElementById(`searchButton${index}`)
     const addFavButton = document.getElementById(`addFavButton${index}`)
-    console.log(button,searchButton,addFavButton)
+    const flashcard = document.getElementById(`flashcard${index}`)
+  
     const handler = (e)=>
     {
         const button = document.getElementById(`flashcardButton${index}`);
@@ -104,10 +105,11 @@ useEffect(() => {
     }
     }
     
-    if(button && searchButton && addFavButton){
-        document.getElementById(`flashcard${index}`).addEventListener('click',handler)
+    if(button && searchButton && addFavButton  && index !== undefined && index !== null){
+       
+        document.addEventListener('click',handler)
         return ()=>{
-            document.getElementById(`flashcard${index}`).removeEventListener('click',handler)
+            document.removeEventListener('click',handler)
         }
     }
 

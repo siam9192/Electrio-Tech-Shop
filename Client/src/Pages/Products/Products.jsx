@@ -7,9 +7,14 @@ import AxiosBase from '../../Axios/AxiosBase';
 import ProductsData from '../../TanstackQuery/ProductsData'
  const Products = () => {
     const [currentPage,setCurrentPage] = useState(1);
+    const [sort,setSort] = useState(0)
     const handleCurrentPage = (page)=>{
         setCurrentPage(page);
 
+    }
+
+    const handleSort = (value)=>{
+        setSort(value)
     }
     return (
         <div className=''>
@@ -23,10 +28,10 @@ import ProductsData from '../../TanstackQuery/ProductsData'
             <WidthContainer>
                 <div className=' flex gap-5 py-10 '>
                 <div className=' w-[30%] lg:block hidden '>
-                    <FilterBox currentPage={currentPage}></FilterBox>
+                    <FilterBox currentPage={currentPage} sort={sort}></FilterBox>
                 </div>
                     <div className=' w-full lg:px-0 px-2'>
-                     <ProductsBox currentPage={currentPage} setCurrentPage={handleCurrentPage}></ProductsBox>
+                     <ProductsBox currentPage={currentPage}  setCurrentPage={handleCurrentPage} setSort={handleSort}></ProductsBox>
                     </div>
                 </div>
             </WidthContainer>

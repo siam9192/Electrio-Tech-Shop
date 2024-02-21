@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ProductsData from '../../TanstackQuery/ProductsData';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
-const FilterBox = ({currentPage}) => {
-    const {refetch,params,removeEmptyParams} = ProductsData(currentPage);
+const FilterBox = ({currentPage,sort}) => {
+    const {refetch,params,removeEmptyParams} = ProductsData(currentPage,sort);
     const [minPrice,setMinPrice] = useState(null);
     const [maxPrice,setMaxPrice] = useState(null) 
     const navigate = useNavigate();
@@ -22,14 +22,7 @@ const FilterBox = ({currentPage}) => {
         const value = e.target.value;
         if(e.target.checked){
             paramsArray[index][1].push(value)
-            // const tempArray = []
-            // paramsArray.forEach((array,index)=>{
-               
-            //     if(array[1].length){
-            //         tempArray.push(array)
-                   
-              
-            //     }})
+            
                 paramsArray = removeEmptyParams(paramsArray);
               
               
@@ -127,11 +120,13 @@ const FilterBox = ({currentPage}) => {
 
           refetch();
        }
+
+     
    
     return (
         <div className=' space-y-5'>
         <p className=' text-xl'>Search</p>
-        <input type="text" defaultValue={params[0][0] & params[0][1].length=== 'key'? params[0][1][0].replace('+'," "): null} placeholder='Enter keyword' className=' w-full py-3 px-2 bg-gray-200 rounded-lg' onChange={handleKeyword} />
+        <input type="text" defaultValue={params[0][0] === 'key' & params[0][1].length ? params[0][1][0].replace('+',' '): null} placeholder='Enter keyword' className=' w-full py-3 px-2 bg-gray-200 rounded-lg' onChange={handleKeyword} />
      <div className=' space-y-4 max-h-[400px] overflow-y-auto'>
      <p className=' text-xl'>Categories</p>
         <div className=' space-y-2'>

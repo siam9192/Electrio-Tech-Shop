@@ -18,6 +18,26 @@ const Cart = () => {
     },[user])
     const totalAmount = cartItems.reduce((prev,current)=>(current.product_details[0].pricing.discountPrice* current.quantity) + prev ,0)
     
+    const checkout = ()=>{
+     
+        const products = cartItems.map((item)=> {
+          return {
+            cart_id : item._id,
+            product_id : item.product_id,
+            quantity: item.quantity,
+            color: item.color,
+            price: item.product_details[0].pricing.discountPrice,
+          }
+         
+
+        })
+
+        AxiosBase().post(`/cart/payment`,{products,total:totalAmount})
+        .then(res =>{
+        window.location.replace(res.data.url)
+        })
+    
+    }
     return (
         <div>
             <div className=' md:py-10 py-5 lg:px-0 px-2  bg-gray-100'>
@@ -56,12 +76,12 @@ const Cart = () => {
               <div  className=' p-5 space-y-5 bg-gray-100'>
               <h1 className=' text-color_primary font-semibold text-xl'>Cart Totals</h1>
                <div className=' pt-5 flex justify-between items-center pb-4 border-b border-gray-700'>
-                  <p className=' text-color_primary'>Subtotal</p> <p>৳{7999}</p>
+                  <p className=' text-color_primary'>Subtotal</p> <p>৳{Math.round(totalAmount)}</p>
                </div> 
                <div className=' pt-5 flex justify-between items-center font-semibold  border-gray-700'>
-                  <p className=' text-color_primary '>Total</p> <p>৳{Math.round(totalAmount+((5/100)*totalAmount))}</p>
+                  <p className=' text-color_primary '>Total</p> <p>৳{Math.round(totalAmount+((5/100)*totalAmount))}  <span className=' text-[10px] font-normal'>(VAT + delivery charge 5% included)</span></p>
                </div> 
-               <button className=' py-3 w-full bg-color_red_orange text-white'>Proceed to Checkout</button>
+               <button className=' py-3 w-full bg-color_red_orange text-white' onClick={checkout}>Proceed to Checkout</button>
               </div>
             </div>
                </div>
