@@ -101,11 +101,13 @@ const Navbar = () => {
                 </Marquee>
             </div>
         <div className='lg:px-0 px-2'>
+
         <WidthContainer>
+       
             <div className='flex justify-between items-center text-color_primary py-4 '>
                 <nav className='space-x-6  text-[18px] lg:block hidden'>
                     {
-                        NavRoutes.map((route,index)=><Link to={route.path} key={index}>{route.display}</Link>)
+                        NavRoutes.map((route,index)=><Link to={route.path} key={index}>{route.display.trim()}</Link>)
                     }
                 </nav>
                 <div>
@@ -115,10 +117,19 @@ const Navbar = () => {
                     <div className=' hover:cursor-pointer' onClick={()=>setSearch(true)}>
                     <FiSearch></FiSearch>
                     </div>
-                   <Link to={'/sign-up'}>
-                   <div>
-                      <FaRegUser></FaRegUser>
-                    </div></Link>
+                    {
+                      user ? 
+                      <Link to={'/profile'}>
+                      <img src="https://i.ibb.co/n7Js4vF/morskie-oko-tatry-1.jpg" alt="" className='w-10 h-10 rounded-full'/>
+                      </Link>
+                      :
+                      <Link to={'/sign-up'}>
+                      <div>
+                         <FaRegUser></FaRegUser>
+                       </div></Link>
+                    }
+                    
+                  
                     <div className=' relative'>
                     <AiOutlineHeart></AiOutlineHeart>
                       <div className=' w-5 h-5 bg-color_yellow flex justify-center items-center absolute -top-3 -right-3 rounded-full text-[#22] text-[14px]'>0</div>
@@ -145,7 +156,7 @@ const Navbar = () => {
                 <div className=' flex items-center gap-4 text-color_primary  '>
                     {
                         categories.map((category,index)=>{
-                        return    <Link>
+                        return    <Link to={`/products?categories=${category.category}`} key={index}>
                         <div className=' flex items-center gap-2' key={index}>
                             <span>{category.icon}</span>
                                 <h2>{category.category}</h2>

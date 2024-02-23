@@ -33,7 +33,7 @@ const Routes = () => {
             shortProduct &&  <ShortDetails></ShortDetails>
            }
      
-<ToastContainer></ToastContainer>
+{/* <ToastContainer></ToastContainer> */}
   
         </div>
 

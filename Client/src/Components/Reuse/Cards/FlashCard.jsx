@@ -12,6 +12,7 @@ import { insert } from '../../../Redux/Reducer/ShortDetails';
 import AxiosBase from '../../../Axios/AxiosBase';
 import UserAuth from '../../../Authentication/UserAuth/UserAuth';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 const FlashCard = ({product,index}) => {
     const [isHover,setHover] = useState(false);
     const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const FlashCard = ({product,index}) => {
     const handleHover = (value)=>{
         setHover(value)
     }
+
+    const navigate = useNavigate();
     
     
     const cartIcon =  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -103,6 +106,9 @@ useEffect(() => {
     else if(addFavButton == e.target || addFavButton.contains(e.target)){
     
     }
+    else if(flashcard == e.target||flashcard.contains(e.target)){
+        navigate(`/products/product/details/${product._id}`)
+    }
     }
     
     if(button && searchButton && addFavButton  && index !== undefined && index !== null){
@@ -118,7 +124,7 @@ useEffect(() => {
 
     return (
      <div>
-         <div className='border rounded-lg flex flex-col ' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`}>
+         <div className='border rounded-lg flex flex-col hover:cursor-pointer' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`}>
             <div className=' flex-grow flex justify-center overflow-hidden relative'>
             <img src={product.images[0]} alt="" className={`w-10/12 transition-all duration-500 ease-out ${isHover ? ' scae-110' : 'scale-100'}`}/>
 

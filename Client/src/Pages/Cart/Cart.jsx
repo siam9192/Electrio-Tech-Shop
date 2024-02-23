@@ -5,18 +5,20 @@ import CartCard from '../../Components/Reuse/Cards/CartCard';
 import AxiosBase from '../../Axios/AxiosBase';
 import UserAuth from '../../Authentication/UserAuth/UserAuth';
 import CartData from '../../TanstackQuery/CartData';
+import CheckoutPopup from '../../Components/CheckoutPopup/CheckoutPopup';
 
 const Cart = () => {
     // const [cartItems,setCartItems] = useState([])
     const {user} = UserAuth();
     const {cartItems,cartRefetch,totalItems} = CartData();
-
+    const [items,setItems] = useState(cartItems)
+    const [isCheckoutPopup,setCheckOutPopup] = useState(false)
     useEffect(()=>{
         if(user){
         cartRefetch()
         }
     },[user])
-    const totalAmount = cartItems.reduce((prev,current)=>(current.product_details[0].pricing.discountPrice* current.quantity) + prev ,0)
+    const totalAmount = items.reduce((prev,current)=>(current.product_details[0].pricing.discountPrice* current.quantity) + prev ,0)
     
     const checkout = ()=>{
      
@@ -38,8 +40,23 @@ const Cart = () => {
         })
     
     }
+
+
+    useEffect(()=>{
+      setItems(cartItems)
+    },[cartItems])
+    const handelItems = (value,index)=>{
+     
+   const arr = items
+   
+   arr[index].quantity = value;
+   
+   setItems([...arr])
+    }
+   
     return (
         <div>
+         
             <div className=' md:py-10 py-5 lg:px-0 px-2  bg-gray-100'>
                   <WidthContainer>
                   <h2 className=' md:text-xl text-black'>Home / My Cart</h2>
@@ -53,8 +70,8 @@ const Cart = () => {
                 {
                     cartItems.length ?
                     
-                        cartItems.map((product,index)=>{
-                            return <CartCard product={product.product_details[0]} cart={product} key={index}></CartCard>
+                        items.map((product,index)=>{
+                            return <CartCard product={product.product_details[0]} cart={product} handelItems={handelItems} index={index} key={index}></CartCard>
                         })
                     
                      :
@@ -86,6 +103,10 @@ const Cart = () => {
             </div>
                </div>
               </WidthContainer>
+
+             {/* {
+              isCheckoutPopup  &&  <CheckoutPopup></CheckoutPopup>
+             } */}
         </div>
     );
 }

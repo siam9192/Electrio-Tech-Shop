@@ -53,7 +53,7 @@ const GridCard = ({product}) => {
                 <span>Add To Cart</span>  <FaArrowRightLong></FaArrowRightLong>
                </div>
                :
-               <h2><del>BDT {product.pricing.price}</del><span className=' text-color_primary font-semibold text-[18px]'>  BDT {product.pricing.discountPrice}</span></h2>
+               <h2><del>৳ {product.pricing.price}</del><span className=' text-color_primary font-semibold text-[18px]'>  ৳ {product.pricing.discountPrice}</span></h2>
                }
               
                <Rating readonly initialRating={4.5} emptySymbol={<TiStarOutline></TiStarOutline>} fullSymbol={<TiStarFullOutline></TiStarFullOutline>}/>

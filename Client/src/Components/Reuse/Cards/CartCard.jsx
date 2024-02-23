@@ -3,7 +3,7 @@ import AxiosBase from '../../../Axios/AxiosBase';
 import UserAuth from '../../../Authentication/UserAuth/UserAuth';
 import CartData from '../../../TanstackQuery/CartData';
 
-const CartCard = ({product,cart}) => {
+const CartCard = ({product,cart,handelItems,index}) => {
     const [quantity,setQuantity] = useState(cart.quantity||1)
     const {cartRefetch} = CartData();
 
@@ -15,6 +15,8 @@ const CartCard = ({product,cart}) => {
             }
         })
     }
+
+    console.log(cart)
     return (
         <div className=' flex md:flex-row flex-col gap-2 md:justify-between md:items-center '>
                             <div className=' w-[%] flex gap-3 items-center'>
@@ -31,11 +33,11 @@ const CartCard = ({product,cart}) => {
                             <div  className=' space-y-1'>
                                 
                                 <div>
-                                    <input type="number"  defaultValue={quantity} className=' w-32 py-3 outline-none text-center border border-color_primary text-color_primary' onChange={(e)=>setQuantity(parseInt(e.target.value))}/>
+                                    <input type="number"  defaultValue={cart.quantity} className=' w-32 py-3 outline-none text-center border border-color_primary text-color_primary' onChange={(e)=>handelItems(parseInt(e.target.value)||1,index)}/>
                                 </div>
                             </div>
                             <div>
-                              <h1 className='  text-color_primary font-bold '>৳{product.pricing.discountPrice*quantity}</h1>
+                              <h1 className='  text-color_primary font-bold '>৳{product.pricing.discountPrice*cart.quantity}</h1>
                               <button className=' hover:text-color_light_red' onClick={handleRemove}>Remove</button>
                             </div>
                         </div>

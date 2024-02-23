@@ -1,9 +1,11 @@
 import React from 'react';
 import { TiStarFullOutline, TiStarOutline } from 'react-icons/ti';
 import Rating from 'react-rating';
+import { Link } from 'react-router-dom';
 
 const ListCard = ({product}) => {
     return (
+      <Link to={`/products/product/details/${product._id}`}>
         <div className=' flex md:flex-row flex-col justify-normal gap-5 hover:shadow-md p-5'>
             <div className=' md:w-[40%]'>
                 <img src={product.images[0]} alt="" />
@@ -27,7 +29,7 @@ const ListCard = ({product}) => {
             </div>
             </div>
        
-        </div>
+        </div></Link>
     );
 }
 

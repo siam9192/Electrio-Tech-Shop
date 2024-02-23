@@ -1,18 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import AxiosBase from '../Axios/AxiosBase';
 import { createSearchParams, useLocation } from 'react-router-dom';
 const ProductsData = (currentPage) => {
     // console.log(currentPage)
     const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
+    const [searchParams,setSearchParams] = useState(new URLSearchParams(location.search));
+  
+    useEffect(()=>{
+      
+        setSearchParams(new URLSearchParams(location.search))
+         },[location.search])
     const perPage = 12;
     const [params,setParams] = useState([
         ['key',searchParams.get('key')?.split(',').filter(val=> val !== '')||[]],
         ['categories', searchParams.get('categories')?.split(',').filter(val=> val !== '')||[]],
         ['brands',searchParams.get('brands')?.split(',').filter(val=> val !== '')||[]],
         ['minPrice',searchParams.get('minPrice')?.split(',').filter(val=> val !== '')||[]],
-        ['maxPrice',searchParams.get('maxPrice')?.split(',').filter(val=> val !== '')||[]]
+        ['maxPrice',searchParams.get('maxPrice')?.split(',').filter(val=> val !== '')||[]],
+        ['sort',searchParams.get('short')?.split(',').filter(val=> val !== '')||[]]
+
       ]
     )
     
@@ -49,7 +56,7 @@ const ProductsData = (currentPage) => {
      }
     
   
-      return {products,pages,isLoading,isFetching,refetch,params,removeEmptyParams}
+      return {products,totalProducts,pages,isLoading,isFetching,refetch,params,removeEmptyParams}
 }
 
 export default ProductsData;

@@ -15,7 +15,7 @@ const SearchParams = () => {
     )
     
     
-return params    
+return params 
   
 }
 

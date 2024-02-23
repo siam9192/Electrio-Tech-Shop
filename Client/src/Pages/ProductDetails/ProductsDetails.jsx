@@ -41,13 +41,17 @@ const ProductsDetails = () => {
     })
 
     useEffect(()=>{
+        window.scrollTo(0,0)
         if(product){
             AxiosBase().get(`/related/products?category=${product.details.category}&id=${id}`)
             .then(res =>{
                 setRelatedProducts(res.data)
+
             })
+
+            
         }
-    },[product])
+    },[product,id])
     const inc = ()=>{
      const plus = quantity + 1;
     
@@ -128,7 +132,7 @@ const ProductsDetails = () => {
                          <img src={product?.images[activeImage]} alt="" className=' max-h-[500px]' />
                          <div className=' md:flex flex-col    grid  grid-cols-4  gap-3'>
                             {
-                                product?.images.map((image,index)=> <img src={image} className={`max-h-32 p-5 border ${activeImage === index ? ' border-color_light_red border-2' : ''} hover:cursor-pointer`} onClick={()=>setActiveImage(index)}></img>)
+                                product?.images.map((image,index)=> <img src={image} key={index} className={`max-h-32 p-5 border ${activeImage === index ? ' border-color_light_red border-2' : ''} hover:cursor-pointer`} onClick={()=>setActiveImage(index)}></img>)
                             }
                          </div>
 
@@ -136,7 +140,7 @@ const ProductsDetails = () => {
                         <div className=' space-y-5'>
                         <div className=' space-y-1'>
                         <h1 className=' md:text-3xl text-2xl text-color_primary font-medium'>{product?.model}</h1>
-                        <h1 className=' md:text-2xl text-xl text-color_secondary font-semibold'><span  className=' line-through fle items-center gap-1'>BDT.{product?.pricing.discountPrice}</span> <span>BDT.{product?.pricing.discountPrice}</span></h1>
+                        <h1 className=' md:text-2xl text-xl text-color_secondary font-semibold'><span  className=' line-through fle items-center gap-1'>৳{product?.pricing.price}</span> <span>৳{product?.pricing.discountPrice}</span></h1>
                         </div>
                        
                         <div className='  space-y-1'>
@@ -244,7 +248,7 @@ const ProductsDetails = () => {
                         <div className=' py-5 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
                             {
                             relatedProducts.map((product,index)=>{
-                                    return <FlashCard product={product}></FlashCard>
+                                    return <FlashCard product={product} index={index}></FlashCard>
                                 })
                             }
                         </div>

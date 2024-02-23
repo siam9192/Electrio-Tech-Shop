@@ -1,6 +1,11 @@
 .category_card:hover .category_icon  {
     background-color: #ffd612;
 }
+
 .category_card:hover .category_name, .products_count  {
     color: white;
+}
+
+.category_card .products_count {
+    color: gray;
 }
