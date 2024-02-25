@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 const Routes = () => {
     const shortProduct = useSelector((state)=>state.shortDetails.product);
     const alertStatus = useSelector(state => state.alert);
+    const {pathname} = useLocation();
+    const isLoginOrSignUpPath = pathname.includes('login') || pathname.includes('sign-up')
+
+
     useEffect(()=>{
         const scrollFunction = ()=>{
             if(shortProduct){
@@ -26,9 +30,11 @@ const Routes = () => {
   
     return (
         <div>
-            <Navbar></Navbar>
+{ !isLoginOrSignUpPath  &&    <Navbar></Navbar> }
             <Outlet></Outlet>
-            <Footer></Footer>
+          {
+            !isLoginOrSignUpPath &&   <Footer></Footer>
+          }
            {
             shortProduct &&  <ShortDetails></ShortDetails>
            }

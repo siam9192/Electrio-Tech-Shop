@@ -22,19 +22,19 @@ const Cart = () => {
     
     const checkout = ()=>{
      
-        const products = cartItems.map((item)=> {
-          return {
-            cart_id : item._id,
-            product_id : item.product_id,
-            quantity: item.quantity,
-            color: item.color,
-            price: item.product_details[0].pricing.discountPrice,
-          }
+        // const products = cartItems.map((item)=> {
+        //   return {
+        //     cart_id : item._id,
+        //     product_id : new ObjectId(item.product_id),
+        //     quantity: item.quantity,
+        //     color: item.color,
+        //     price: item.product_details[0].pricing.discountPrice,
+        //   }
          
 
-        })
+        // })
 
-        AxiosBase().post(`/cart/payment`,{products,total:totalAmount})
+        AxiosBase().post(`/cart/payment`,{products:cartItems,total:totalAmount,customer:user.email})
         .then(res =>{
         window.location.replace(res.data.url)
         })

@@ -117,40 +117,39 @@ const SignUp = () => {
     }
     
     return (
-        <div className='lg:py-20 py-10 flex justify-center items-center lg;px-0 px-2'>
-            <form className=' lg:w-1/2 w-full space-y-4' onSubmit={handleSubmit}>
-                <h1 className=' text-4xl text-color_primary font-semibold text-center'>Sign up </h1>
-              <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
-                <input type="text" name='firstName' placeholder='First Name'  className=' py-3 px-2 outline-none w-full flex-1 bg-gray-200' required/>
-                <input type="text" name='lastName' placeholder='Last Name'  className=' py-3 px-2 outline-none w-full flex-1 bg-gray-200' required/>
-              </div>
-              <input type="email" name='email' placeholder='Email'  className=' py-3 px-2 outline-none w-full flex-1 bg-gray-200' required/>
+        <div className=' grid md:grid-cols-2 lg:px-10 px-2'>
+       
+
+        <div className='overflow-hidden md:block hidden'>
+            <img className='w-full' src="https://i.ibb.co/QH4WYQC/6310507.jpg" alt="" />
+        </div>
+        <form className='  space-y-4 lg:py-10 p-5' onSubmit={handleSubmit}>
+            <img src="http://localhost:5173/images/logo.png" alt="" className=' ' />
+            <h1 className='  text-color_blue md":text-4xl text-3xl pb-5'>Hey, <br /><span className=' text-color_secondary font-bold text-4xl'>Create your Account!</span></h1>
             <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
-            <input type="text" name='password' placeholder='Password'  className=' py-3 px-2 outline-none w-full flex-1 bg-gray-200' required/>
-              <input type="text" name='conPassword' placeholder='Confirm Password'  className=' py-3 px-2 outline-none w-full flex-1 bg-gray-200' required/>
-            </div>
-            <button disabled={isProcessing} className=' w-full py-3 bg-color_yellow text-color_primary font-semibold'>{isProcessing ? <span className="loading loading-dots loading-sm"></span> : 'Sign Up'}</button>
-            <p>Already have an account? <Link className=' text-color_secondary font-bold' to={'/login'}>Login</Link></p>
-            {error && <p className=' text-color_light_red '>{error}</p>}
-            </form>
-          {
-            isPopup &&   <div  className={`w-full h-full fixed top-0 left-0 bg-black bg-opacity-20 flex justify-center items-center lg:px-0 px-2 ${isPopup ? ' scale-100' : 'scale-0' } transition-transform duration-700 ease-in`}>
-
-            <div ref={popupRef} className=' p-10 bg-white lg:w-1/3 md:w-1/2 w-full rounded-lg'>
-                <div className=' flex justify-center'>
-                <div className=' p-5 bg-color_secondary text-white text-5xl rounded-full'>
-                    <FaCheck></FaCheck>
+            <input type="text" name='firstName' placeholder='First Name'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
+            <input type="text" name='lastName' placeholder='Last Name'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
                 </div>
-               
-                </div>
-                <h1 className=' text-3xl font-semibold text-center text-color_blue'>Successful !</h1>
-                <p className=' text-color_primary text-center py-1'>Account Successfully created. Thanks for joining with electio</p>
-                <p></p>
-            </div>
+            
+          <input type="text" name='email' placeholder='Email'  className=' py-4  px-2 outline-none w-full flex-1 border ' required/>
+        <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
+        <input type="text" name='password' placeholder='Password'  className=' py-4 px-2 outline-none w-full flex-1 border-2' required/>
+       
 
+       
+         
         </div>
-          }
+        <input type="text" name='conPassword' placeholder='ConfirmPassword'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
+
+        <div className=' flex items-center gap-2'>
+            <input type="checkbox"  className=' w-5 h-5 accent-color_secondary'/>
+            <p>Show Password</p>
         </div>
+        <button className=' w-full py-3 bg-color_secondary text-white text-color_primar tet-xl font-semibold'>{isProcessing ? <span className="loading loading-dots loading-sm"></span> : 'Sign up'}</button>
+        <p>Don't have an account? <Link className=' text-color_secondary font-bold' to={'/login'}>login</Link></p>
+        </form>
+
+    </div>
     );
 }
 

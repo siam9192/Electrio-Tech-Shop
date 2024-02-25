@@ -6,7 +6,7 @@ const AxiosBase = () => {
     //  http://localhost:5000
     // https://electio-cu94kxkf5-siam-hasans-projects.vercel.app/api/v1
     const base = axios.create({
-        baseURL:' http://localhost:5000/api/v1'
+        baseURL:'http://localhost:5000/api/v1'
     })
     return base
 }

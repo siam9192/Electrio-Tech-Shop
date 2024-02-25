@@ -27,6 +27,7 @@ const Navbar = () => {
   const [isSearch,setSearch] = useState(false);
   const [isCart,setCart] = useState(false);
   const {pathname} = useLocation();
+  const isLoginOrSignUpPath = pathname.includes('login') || pathname.includes('sign-up')
 
 
   const {user} = UserAuth();
@@ -37,6 +38,8 @@ const Navbar = () => {
       cartRefetch()
       }
   },[user])
+
+
 
 
 
@@ -70,7 +73,7 @@ const Navbar = () => {
       }
     ]
   
-    const NavRoutes = [{display:'Home',path:'/'},{display:'Shop',path:'/shop'},{display:'Products',path:'/products'},{display:'Blog',path:'/blog'}]
+    const NavRoutes = [{display:'Home',path:'/'},{display:'Brands',path:'/brands'},{display:'Events',path:'/events'},{display:'Products',path:'/products'},{display:'Blog',path:'/blog'},{display:'About Us',path:'/about'}]
     const handleToggle = (value)=>{
       setToggle(value)
     }
@@ -119,7 +122,7 @@ const Navbar = () => {
                     </div>
                     {
                       user ? 
-                      <Link to={'/profile'}>
+                      <Link to={'/dashboard'}>
                       <img src="https://i.ibb.co/n7Js4vF/morskie-oko-tatry-1.jpg" alt="" className='w-10 h-10 rounded-full'/>
                       </Link>
                       :
@@ -150,7 +153,8 @@ const Navbar = () => {
                 </div>
             </div>
         </WidthContainer>
-        <div className=' border lg:block hidden'>
+       {
+        isLoginOrSignUpPath &&  <div className=' border lg:block hidden'>
         <WidthContainer >
         <div className=' flex items-center justify-between py-5 '>
                 <div className=' flex items-center gap-4 text-color_primary  '>
@@ -174,6 +178,7 @@ const Navbar = () => {
             </div>
         </WidthContainer>
         </div>
+       }
         </div>
 
          <SearchBar isSearch={isSearch} setSearch={handleSearch}></SearchBar>

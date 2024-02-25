@@ -25,9 +25,9 @@ const ProfileDetails = () => {
 
             </EditProfile>
             :
-            <div  className=' space-y-3'>
+            <div  className=' space-y-3 bg-white p-5'>
 
-        <div className=' py-2 border-'>
+        <div className=' py-2 borde'>
         <h1 className=' text-color_primary  text-xl'><span className=' font-bold'>Full Name : </span>
         {userProfile?.details?.firstName + ' '+ userProfile?.details?.lastName}
         </h1>

@@ -6,7 +6,11 @@ import ProductsDetails from "../Pages/ProductDetails/ProductsDetails";
 import Cart from "../Pages/Cart/Cart";
 import Login from "../Pages/Login/Login";
 import SignUp from "../Pages/SignUp/SignUp";
-import Profile from "../Pages/Profile/Profile";
+import Dashboard from "../Pages/Dashboard/Dashboard";
+import ProfileDetails from "../Pages/Profile/ProfileDetails";
+import Profile from "../Pages/Dashboard/Profile";
+import Orders from "../Pages/Dashboard/Orders";
+import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 
 const Router = createBrowserRouter([
     {
@@ -37,9 +41,28 @@ const Router = createBrowserRouter([
                 path:'/sign-up',
                 element:<SignUp></SignUp>
             },
+            // {
+            // path:'/profile',
+            // element:<Profile></Profile>
+            // },
+            
+        ]
+    },
+    {
+        path:'/dashboard',
+        element:<Dashboard></Dashboard>,
+        children:[
             {
-            path:'/profile',
-            element:<Profile></Profile>
+                path:'/dashboard/profile',
+                element:<Profile></Profile>
+            },
+            {
+                path:'/dashboard/orders',
+                element:<Orders></Orders>
+            },
+            {
+                path:'/dashboard/payment-history',
+                element:<PaymentHistory></PaymentHistory>
             }
         ]
     }
