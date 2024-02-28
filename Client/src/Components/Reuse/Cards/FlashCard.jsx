@@ -95,8 +95,9 @@ useEffect(() => {
         const addFavButton = document.getElementById(`addFavButton${index}`)
     const shortMenu = shortCartRef.current;
     const card = cardRef.current;
+
     
-    // console.log(button == e.target || )
+    console.log(button == e.target )
     if(button == e.target || button.contains(e.target)){
       addCart()
     }
@@ -111,6 +112,7 @@ useEffect(() => {
     }
     }
     
+    
     if(button && searchButton && addFavButton  && index !== undefined && index !== null){
        
         document.addEventListener('click',handler)
@@ -120,11 +122,13 @@ useEffect(() => {
     }
 
   
+
 }, []);
+
 
     return (
      <div>
-         <div className='border rounded-lg flex flex-col hover:cursor-pointer' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`}>
+         <div className='border rounded-lg flex flex-col hover:cursor-pointer' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} ref={cardRef} id={`flashcard${index}`} >
             <div className=' flex-grow flex justify-center overflow-hidden relative'>
             <img src={product.images[0]} alt="" className={`w-10/12 transition-all duration-500 ease-out ${isHover ? ' scae-110' : 'scale-100'}`}/>
 

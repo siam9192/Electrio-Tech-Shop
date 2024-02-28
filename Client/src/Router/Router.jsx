@@ -11,6 +11,9 @@ import ProfileDetails from "../Pages/Profile/ProfileDetails";
 import Profile from "../Pages/Dashboard/Profile";
 import Orders from "../Pages/Dashboard/Orders";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import About from "../Pages/About/About";
+import Brands from "../Pages/Brands/Brands";
+import PrivateRoutes from "../Components/PrivateRoutes/PrivateRoutes";
 
 const Router = createBrowserRouter([
     {
@@ -30,6 +33,10 @@ const Router = createBrowserRouter([
                 element:<ProductsDetails></ProductsDetails>
             },
             {
+                path:'/brands',
+                element:<Brands></Brands>
+                },
+            {
                 path:'/my-cart',
                 element:<Cart></Cart>
             },
@@ -41,27 +48,27 @@ const Router = createBrowserRouter([
                 path:'/sign-up',
                 element:<SignUp></SignUp>
             },
-            // {
-            // path:'/profile',
-            // element:<Profile></Profile>
-            // },
+            {
+            path:'/about',
+            element:<About></About>
+            },
             
         ]
     },
     {
-        path:'/dashboard',
-        element:<Dashboard></Dashboard>,
+        path:'/my-profile',
+        element:<PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children:[
             {
-                path:'/dashboard/profile',
+                path:'/my-profile',
                 element:<Profile></Profile>
             },
             {
-                path:'/dashboard/orders',
+                path:'/my-profile/orders',
                 element:<Orders></Orders>
             },
             {
-                path:'/dashboard/payment-history',
+                path:'/my-profile/payment-history',
                 element:<PaymentHistory></PaymentHistory>
             }
         ]

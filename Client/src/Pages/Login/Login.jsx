@@ -7,6 +7,8 @@ const Login = () => {
     const [error,setError] = useState('');
     const [isProcessing,setProcessing] = useState(false);
     const {pathname,state} = useLocation();
+    const [isPassword,setPassword] = useState(true); 
+    
     const navigate = useNavigate();
     const handleSubmit = (e)=>{
         e.preventDefault();
@@ -28,10 +30,19 @@ const Login = () => {
 
         .catch(err =>{
             setProcessing(false)
-            setError('Something went wrong')
+            setError(err.message)
         })
         
     }
+    const handelPassword = (e)=>{
+        if(e.target.checked){
+            setPassword(false)
+        }
+        else{
+            setPassword(true)
+        }
+    }
+    
     return (
         <div className=' grid md:grid-cols-2 lg:px-10 px-2'>
         <form className='  space-y-4 py-10' onSubmit={handleSubmit}>
@@ -40,17 +51,17 @@ const Login = () => {
           
           <input type="email" name='email' placeholder='Email'  className=' py-6  px-2 outline-none w-full flex-1 border ' required/>
         <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
-        <input type="text" name='password' placeholder='Password'  className=' py-6 px-2 outline-none w-full flex-1 border' required/>
+        <input  type={isPassword ? 'password' : 'text'} name='password' placeholder='Password'  className=' py-6 px-2 outline-none w-full flex-1 border' required/>
 
        
          
         </div>
 
         <div className=' flex items-center gap-2'>
-            <input type="checkbox"  className=' w-5 h-5 accent-color_secondary'/>
+            <input type="checkbox" onChange={handelPassword}  className=' w-5 h-5 accent-color_secondary'/>
             <p>Show Password</p>
         </div>
-        <button className=' w-full py-3 bg-color_secondary text-white text-color_primar tet-xl font-semibold'>{isProcessing ? <span className="loading loading-dots loading-sm"></span> : 'Login'}</button>
+        <button className=' w-full py-3 bg-color_secondary text-white text-color_primar tet-xl font-semibold'>{isProcessing ? <span><span className="loading loading-dots loading-sm"></span> Just a moment</span> : 'Login'}</button>
         <p>Don't have an account? <Link className=' text-color_secondary font-bold' to={'/sign-up'}>Sign up</Link></p>
         </form>
 

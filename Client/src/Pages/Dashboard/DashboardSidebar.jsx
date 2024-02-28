@@ -8,22 +8,22 @@ const DashboardSidebar = () => {
     const {pathname} = useLocation();
   const routes = [
      {
-        path:'/dashboard/profile',
+        path:'/my-profile',
         display:'Profile',
         icon: <FaUser></FaUser>
      }   ,
      {
-        path:'/dashboard/favourites',
+        path:'/my-profile/favourites',
         display:'My Favoutites',
         icon: <IoMdHeart></IoMdHeart>
      },
      {
-        path:'/dashboard/orders',
+        path:'/my-profile/orders',
         display:'My Orders',
         icon: <FaShippingFast></FaShippingFast>
      },
      {
-        path:'/dashboard/payment-history',
+        path:'/my-profile/payment-history',
         display:'Payment History',
         icon: <MdOutlinePayment></MdOutlinePayment>
      }

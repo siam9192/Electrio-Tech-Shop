@@ -122,8 +122,8 @@ const Navbar = () => {
                     </div>
                     {
                       user ? 
-                      <Link to={'/dashboard'}>
-                      <img src="https://i.ibb.co/n7Js4vF/morskie-oko-tatry-1.jpg" alt="" className='w-10 h-10 rounded-full'/>
+                      <Link to={'/my-profile'}>
+                      <img src={user?.photoURL || 'https://i.ibb.co/n7Js4vF/morskie-oko-tatry-1.jpg'} alt="" className='w-10 h-10 rounded-full'/>
                       </Link>
                       :
                       <Link to={'/sign-up'}>
@@ -154,7 +154,7 @@ const Navbar = () => {
             </div>
         </WidthContainer>
        {
-        isLoginOrSignUpPath &&  <div className=' border lg:block hidden'>
+        !isLoginOrSignUpPath &&  <div className=' border lg:block hidden'>
         <WidthContainer >
         <div className=' flex items-center justify-between py-5 '>
                 <div className=' flex items-center gap-4 text-color_primary  '>

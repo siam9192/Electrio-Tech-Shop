@@ -7,9 +7,11 @@ import AxiosBase from '../../Axios/AxiosBase';
 const SignUp = () => {
     const {createUser,logout} = UserAuth();
     const [error,setError] = useState('');
+    const [success,setSuccess] = useState(false);
     const [isProcessing,setProcessing] = useState(false);
     const [isPopup,setPopup] = useState(false);
     const popupRef = useRef(null);
+    const [isPassword,setPassword] = useState(true); 
 
     useEffect(()=>{
         const scrollFunction = ()=>{
@@ -42,6 +44,7 @@ const SignUp = () => {
         e.preventDefault();
         setError('')
         setProcessing(true);
+        setSuccess('')
         const form = e.target;
         const firstName = form.firstName.value;
         const lastName = form.lastName.value;
@@ -98,22 +101,32 @@ const SignUp = () => {
                     logout()
                     setPopup(true)
                     setProcessing(false)
-
+                    setSuccess('Sign up successful')
+                     form.reset()
                 }
             })
             .catch(err =>{
-                console.log(err)
+                setError(err.message)
                 setProcessing(false)
             })
         })
         .catch(err=>{
-            console.log(err)
+            setError(err.message)
             setProcessing(false)
         })
 
 
 
 
+    }
+
+    const handelPassword = (e)=>{
+        if(e.target.checked){
+            setPassword(false)
+        }
+        else{
+            setPassword(true)
+        }
     }
     
     return (
@@ -128,24 +141,30 @@ const SignUp = () => {
             <h1 className='  text-color_blue md":text-4xl text-3xl pb-5'>Hey, <br /><span className=' text-color_secondary font-bold text-4xl'>Create your Account!</span></h1>
             <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
             <input type="text" name='firstName' placeholder='First Name'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
-            <input type="text" name='lastName' placeholder='Last Name'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
+            <input type="text"  name='lastName' placeholder='Last Name'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
                 </div>
             
           <input type="text" name='email' placeholder='Email'  className=' py-4  px-2 outline-none w-full flex-1 border ' required/>
         <div className=' flex lg:flex-row flex-col md:items-center gap-5'>
-        <input type="text" name='password' placeholder='Password'  className=' py-4 px-2 outline-none w-full flex-1 border-2' required/>
+        <input type={isPassword ? 'password' : 'text'} name='password' placeholder='Password'  className=' py-4 px-2 outline-none w-full flex-1 border-2' required/>
        
 
        
          
         </div>
-        <input type="text" name='conPassword' placeholder='ConfirmPassword'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
+        <input  type={isPassword ? 'password' : 'text'} name='conPassword' placeholder='ConfirmPassword'  className=' py-4  px-2 outline-none w-full flex-1 border-2 ' required/>
 
         <div className=' flex items-center gap-2'>
-            <input type="checkbox"  className=' w-5 h-5 accent-color_secondary'/>
+            <input type="checkbox" onChange={handelPassword}  className=' w-5 h-5 accent-color_secondary'/>
             <p>Show Password</p>
         </div>
-        <button className=' w-full py-3 bg-color_secondary text-white text-color_primar tet-xl font-semibold'>{isProcessing ? <span className="loading loading-dots loading-sm"></span> : 'Sign up'}</button>
+        {
+            error && <p className=' text-color_light_red '>{error}</p>
+        }
+          {
+            success && <p className=' text-color_green '>{success}</p>
+        }
+        <button className=' w-full py-3 bg-color_secondary text-white text-color_primar tet-xl font-semibold'>{isProcessing ? <span><span className="loading loading-dots loading-sm"></span> Just a moment</span> : 'Sign up'}</button>
         <p>Don't have an account? <Link className=' text-color_secondary font-bold' to={'/login'}>login</Link></p>
         </form>
 
