@@ -4,19 +4,22 @@ import { IoMdHeart } from "react-icons/io";
 import { MdOutlinePayment } from "react-icons/md";
 import { FaShippingFast } from "react-icons/fa";
 import { Link, useLocation } from 'react-router-dom';
+import UserAuth from '../../Authentication/UserAuth/UserAuth';
 const DashboardSidebar = () => {
     const {pathname} = useLocation();
+
+    const {logout} = UserAuth()
   const routes = [
      {
         path:'/my-profile',
         display:'Profile',
         icon: <FaUser></FaUser>
      }   ,
-     {
-        path:'/my-profile/favourites',
-        display:'My Favoutites',
-        icon: <IoMdHeart></IoMdHeart>
-     },
+   //   {
+   //      path:'/my-profile/favourites',
+   //      display:'My Favoutites',
+   //      icon: <IoMdHeart></IoMdHeart>
+   //   },
      {
         path:'/my-profile/orders',
         display:'My Orders',
@@ -39,7 +42,14 @@ const DashboardSidebar = () => {
                     </div>
                     </Link>
                 })
+               
+
             }
+             <Link onClick={logout}>
+                <div className={`px-5 py-3 bg-color_primary text-white text-xl font-semibold flex  items-center gap-2 `} >
+                  <span></span>  <span> Logout</span> 
+                </div>
+                </Link>
         </div>
     );
 }

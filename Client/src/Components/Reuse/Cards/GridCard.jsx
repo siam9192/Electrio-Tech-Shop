@@ -7,14 +7,20 @@ import { CiSearch } from "react-icons/ci";
 import { LuUser } from "react-icons/lu";
 import { IoSearch } from "react-icons/io5";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { insert } from '../../../Redux/Reducer/ShortDetails';
+import AxiosBase from '../../../Axios/AxiosBase';
+import UserAuth from '../../../Authentication/UserAuth/UserAuth';
+import toast, { Toaster } from 'react-hot-toast';
 const GridCard = ({product}) => {
 
     const [isHover,setHover] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const {user} = UserAuth();
+
    
    
     const handleHover = (value)=>{
@@ -27,6 +33,41 @@ const GridCard = ({product}) => {
     const handleDispatch = ()=>{
    dispatch(insert(product))
     }
+
+    const addToFav = ()=>{
+
+        if(user){
+        const details = {
+            productId:product._id,
+            customer:user.email
+        }
+        AxiosBase().post('/add/products/favourite',details)
+        .then(res =>{
+            if(res.data.insertedId){
+                toast.success('Successfully added')
+            }
+            else{
+                toast.error('Already added')
+            }
+        })
+
+    }
+    else{
+        
+      const data = JSON.parse(localStorage.getItem('favourites'))||[]
+     
+        const find = data.find(item => item === product._id);
+        if(find){
+            toast.error('Already added')
+            return;
+        }
+         data.push(product._id);
+  
+        localStorage.setItem('favourites',JSON.stringify(data))
+        toast.success('Successfully added')
+
+    }
+    }
     return (
         <div className='border rounded-lg flex flex-col hover:cursor-pointer' onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} >
             <div className=' flex-grow flex justify-center overflow-hidden relative'>
@@ -36,7 +77,7 @@ const GridCard = ({product}) => {
                 <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl' onClick={handleDispatch}>
                   <IoSearch></IoSearch>
                 </div>
-                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl'>
+                <div className='w-10 h-10 rounded-full bg-color_secondary text-white flex justify-center items-center text-xl' onClick={addToFav}>
                    <AiOutlineHeart></AiOutlineHeart>
                 </div>
             </div>
@@ -60,8 +101,12 @@ const GridCard = ({product}) => {
                </div>
               
 
-            
+        
             </div>
+            <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
         </div>
     );
 }

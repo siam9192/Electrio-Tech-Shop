@@ -132,11 +132,12 @@ const Navbar = () => {
                        </div></Link>
                     }
                     
-                  
-                    <div className=' relative'>
+                  <Link to={'my-favourites'}>
+                  <div className=' relative'>
                     <AiOutlineHeart></AiOutlineHeart>
                       <div className=' w-5 h-5 bg-color_yellow flex justify-center items-center absolute -top-3 -right-3 rounded-full text-[#22] text-[14px]'>0</div>
                     </div>
+                  </Link>
                     <Link to={'/my-cart'}>
                     <div className=' relative hover:cursor-pointer' >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

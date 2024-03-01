@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WidthContainer from '../../Components/Reuse/WidthContainer/WidthContainer';
 // import products from '../../Components/product';
-import FlashCard from '../../Components/Reuse/Cards/FlashCard';
+import GridCard from '../../Components/Reuse/Cards/GridCard';
 import AxiosBase from '../../Axios/AxiosBase';
 
 const Brands = () => {
@@ -54,7 +54,7 @@ const Brands = () => {
                             <div className=' py-5 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
                             {
                                 products.map((product,index)=>{
-                                    return <FlashCard product={product} key={index}></FlashCard>
+                                    return <GridCard product={product} key={index}></GridCard>
                                 })
                             }
                         </div>

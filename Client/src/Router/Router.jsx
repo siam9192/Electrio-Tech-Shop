@@ -14,6 +14,7 @@ import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
 import About from "../Pages/About/About";
 import Brands from "../Pages/Brands/Brands";
 import PrivateRoutes from "../Components/PrivateRoutes/PrivateRoutes";
+import Favourites from "../Pages/Favourites/Favourites";
 
 const Router = createBrowserRouter([
     {
@@ -39,6 +40,10 @@ const Router = createBrowserRouter([
             {
                 path:'/my-cart',
                 element:<Cart></Cart>
+            },
+            {
+                path:'/my-favourites',
+                element:<Favourites></Favourites>
             },
             {
                 path:'/login',
